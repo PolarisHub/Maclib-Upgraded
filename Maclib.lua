@@ -1730,7 +1730,7 @@ function MacLib:Window(Settings)
 					toggle1.ImageColor3 = Color3.fromRGB(87, 86, 86)
 					toggle1.AutoButtonColor = false
 					toggle1.AnchorPoint = Vector2.new(1, 0.5)
-					toggle1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					toggle1.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 					toggle1.BackgroundTransparency = 1
 					toggle1.BorderColor3 = Color3.fromRGB(0, 0, 0)
 					toggle1.BorderSizePixel = 0
@@ -1749,7 +1749,7 @@ function MacLib:Window(Settings)
 					local togglerHead = Instance.new("ImageLabel")
 					togglerHead.Name = "TogglerHead"
 					togglerHead.Image = assets.togglerHead
-					togglerHead.ImageColor3 = Color3.fromRGB(255, 255, 255)
+					togglerHead.ImageColor3 = Color3.fromRGB(0, 255, 0)
 					togglerHead.AnchorPoint = Vector2.new(1, 0.5)
 					togglerHead.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					togglerHead.BackgroundTransparency = 1
@@ -1764,7 +1764,7 @@ function MacLib:Window(Settings)
 					toggle1.Parent = toggle
 
 					local toggle1Transparency = {Enabled = 0, Disabled = 0.5}
-					local togglerHeadTransparency = {Enabled = 0, Disabled = 0.85}
+					local togglerHeadTransparency = {Enabled = 0, Disabled = 0.2}
 
 					local TweenSettings = {
 						Info = TweenInfo.new(0.15, Enum.EasingStyle.Quad),
@@ -1776,17 +1776,22 @@ function MacLib:Window(Settings)
 					local togglebool = ToggleFunctions.Settings.Default
 
 					local function NewState(State, callback)
-						local transparencyValues = State and {toggle1Transparency.Enabled, togglerHeadTransparency.Enabled}
-							or {toggle1Transparency.Disabled, togglerHeadTransparency.Disabled}
+                        local colorValues = State and {Color3.fromRGB(0, 255, 0), Color3.fromRGB(0, 255, 0)}  
+                            or {Color3.fromRGB(255, 0, 0), Color3.fromRGB(255, 0, 0)}              
+                            
+                        local transparencyValues = State and {toggle1Transparency.Enabled, togglerHeadTransparency.Enabled}
+                            or {toggle1Transparency.Disabled, togglerHeadTransparency.Disabled}
+                    
 						local position = State and TweenSettings.EnabledPosition or TweenSettings.DisabledPosition
 
-						Tween(toggle1, TweenSettings.Info, {
-							ImageTransparency = transparencyValues[1]
-						}):Play()
-
-						Tween(togglerHead, TweenSettings.Info, {
-							ImageTransparency = transparencyValues[2]
-						}):Play()
+                        Tween(toggle1, TweenSettings.Info, {
+                            ImageTransparency = transparencyValues[1]
+                        }):Play()
+                        
+                        Tween(togglerHead, TweenSettings.Info, {
+                            ImageColor3 = colorValues[2]
+                        }):Play()
+                        
 
 						Tween(togglerHead, TweenSettings.Info, {
 							Position = position
